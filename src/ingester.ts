@@ -1,11 +1,9 @@
-import pino from 'pino'
 import { IdResolver } from '@atproto/identity'
 import { Firehose } from '@atproto/sync'
 import type { Database } from '#/db'
 import * as Status from '#/lexicon/types/xyz/statusphere/status'
 
 export function createIngester(db: Database, idResolver: IdResolver) {
-  const logger = pino({ name: 'firehose ingestion' })
   return new Firehose({
     idResolver,
     handleEvent: async (evt: any) => {
@@ -47,7 +45,7 @@ export function createIngester(db: Database, idResolver: IdResolver) {
       }
     },
     onError: (err: any) => {
-      logger.error({ err }, 'error on firehose ingestion')
+      console.log({ err }, 'error on firehose ingestion')
     },
     filterCollections: ['xyz.statusphere.status'],
     excludeIdentity: true,
